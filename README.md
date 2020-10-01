@@ -7,10 +7,12 @@ Variables will be stored with case sensitive key value pairs in the following sy
   - "COMMAND key and/or value" 
 
 Commands: 
-  - GET <key>= Retrieves value of given key
-  - SET <key> <value> = Sets value for given key
-  - DELETE <key> = Removes key value pair associated with given key
-  - COUNT <value>  = Returns number over occurrences of a given value 
   - BEGIN = Opens a transaction
+  - CLEAR = Clears terminal
   - COMMIT = Commits current code within an open transaction
+  - COUNT <value>  = Returns number over occurrences of a given value 
+  - DELETE <key> = Removes key value pair associated with given key
+  - GET <key>= Retrieves value of given key
+  - HELP = Shows list of commands
   - ROLLBACK = Discards changes within an open transaction, then closes transaction
+  - SET <key> <value> = Sets value for given key
