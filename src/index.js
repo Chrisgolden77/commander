@@ -2,31 +2,34 @@
 
 const chalk = require("chalk");
 const figlet = require("figlet");
-const inquirer = require("inquirer");
-const shell = require("shelljs");
 
-let storageContainer = {};
+const { handleError, messageUser, promptUser } = require("./utilities");
 
 const init = () => {
-  console.log(
-    chalk.cyan(
-      figlet.textSync("WELCOME COMMANDER!", {
-        font: "small",
-        horizontalLayout: "default",
-        verticalLayout: "default",
-      })
-    ),
-    chalk.green(
-      "\nWhat would you like to do?:\nBEGIN\nCLEAR\nCOMMIT\nCOUNT\nDELETE\nGET\nHELP\nROLLBACK\nor SET"
-    )
-  );
+  messageUser({
+    messages: [
+      chalk.cyan.bold(
+        figlet.textSync("WELCOME COMMANDER!", {
+          font: "small",
+          horizontalLayout: "default",
+          verticalLayout: "default",
+        })
+      ),
+      chalk.yellow("\nEnter HELP for a list of possible commands."),
+    ],
+  });
 };
 
-const run = async () => {};
-// intro
-init();
-//Ask questions
-//respond to command
-//show success message
+const run = async () => {
+  // intro
+  init();
+  //Ask questions
+  try {
+    await promptUser();
+  } catch (error) {
+    return await handleError({ errors: [...error] });
+  }
+  //show success message
+};
 
 run();
