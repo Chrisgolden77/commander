@@ -8,12 +8,13 @@ const actions = (PROMPT) => {
     case "HELP":
       messageUser({
         messages: [
-          "- BEGIN (begins transaction)\n- CLEAR (clears terminal)\n- COMMIT (commits open transaction)\n- COUNT <value>\n- DELETE <key>\n- GET <key>\n- HELP (lists possible commands)\n- ROLLBACK (discards changes inside open transaction)\n- or SET <key> <value> \n: ",
+          "- BEGIN (begins transaction)\n- COMMIT (commits open transaction)\n- COUNT <value>\n- DELETE <key>\n- GET <key>\n- HELP (lists possible commands)\n- ROLLBACK (discards changes inside open transaction)\n- or SET <key> <value>",
         ],
       });
       return promptUser();
     case "KILL":
-      handleError({ errors: ["KILLING PROGRAM! GOODBYE FATHER"] });
+      handleError({ errors: ["KILLING PROGRAM! GOODBYE FATHER!"] });
+      break;
     default:
       handleError({
         errors: ["Command does not exist. Type HELP for list of commands."],
@@ -27,7 +28,7 @@ const handleError = async ({ errors }) => {
 };
 const messageUser = ({ messages }) => {
   return messages.map((message) =>
-    console.log(chalk.yellowBright.bold(message))
+    console.log(chalk.cyanBright.bold(message))
   );
 };
 const promptUser = async () => {
@@ -36,7 +37,7 @@ const promptUser = async () => {
       {
         name: "PROMPT",
         type: "input",
-        message: messageUser({ messages: ["\nWhat would you like to do?\n:"] }),
+        message: messageUser({ messages: ["\nWhat would you like to do?:"] }),
       },
     ]);
     const { PROMPT } = answers;

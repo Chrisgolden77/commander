@@ -8,14 +8,14 @@ const { handleError, messageUser, promptUser } = require("./utilities");
 const init = () => {
   messageUser({
     messages: [
-      chalk.cyan.bold(
+      chalk.magentaBright.bold(
         figlet.textSync("WELCOME COMMANDER!", {
           font: "small",
           horizontalLayout: "default",
           verticalLayout: "default",
         })
       ),
-      chalk.yellow("\nEnter HELP for a list of possible commands."),
+      chalk.grey("\nEnter HELP for a list of possible commands."),
     ],
   });
 };
