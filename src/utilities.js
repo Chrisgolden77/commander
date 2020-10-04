@@ -3,8 +3,24 @@ const figlet = require("figlet");
 const inquirer = require("inquirer");
 const shell = require("shelljs");
 
-const actions = (PROMPT) => {
-  switch (PROMPT) {
+// const { handleCOUNT, handleDELETE, handleGET, handleSET } = require("./db");
+const db = require("./db");
+
+const actions = async (PROMPT) => {
+  const query = PROMPT.split(" ");
+  switch (query[0]) {
+    case "DELETE":
+      const deleteResponse = await db.handleDELETE({ key: query[1] });
+      deleteResponse && messageUser({ messages: [deleteResponse] });
+      return promptUser();
+    case "GET":
+      const getResponse = await db.handleGET({ key: query[1] });
+      getResponse && messageUser({ messages: [getResponse] });
+      return promptUser();
+    case "SET":
+      const setResponse = await db.handleSET({ key: query[1], value: query[2] });
+      setResponse && messageUser({ messages: [setResponse] });
+      return promptUser();
     case "HELP":
       messageUser({
         messages: [
@@ -13,24 +29,24 @@ const actions = (PROMPT) => {
       });
       return promptUser();
     case "KILL":
-      handleError({ errors: ["KILLING PROGRAM! GOODBYE FATHER!"] });
+      handleError({ error: "KILLING PROGRAM! GOODBYE FATHER!" });
       break;
     default:
       handleError({
-        errors: ["Command does not exist. Type HELP for list of commands."],
+        error: `Command "${query[0]}" does not exist. Type HELP for list of commands.`,
       });
       return promptUser();
   }
 };
 
-const handleError = async ({ errors }) => {
-  return errors.map((error) => console.log(chalk.red.bold("ERROR: ", error)));
+const handleError = async ({ error }) => {
+  return console.log(chalk.red.bold("ERROR: ", error));
 };
+
 const messageUser = ({ messages }) => {
-  return messages.map((message) =>
-    console.log(chalk.cyanBright.bold(message))
-  );
+  return messages.map((message) => console.log(chalk.cyanBright.bold(message)));
 };
+
 const promptUser = async () => {
   try {
     const answers = await inquirer.prompt([
@@ -44,7 +60,8 @@ const promptUser = async () => {
     //respond to command
     const result = await actions(PROMPT);
   } catch (error) {
-    return handleError({ errors: [...error] });
+    handleError({ error });
+    return promptUser();
   }
 };
 

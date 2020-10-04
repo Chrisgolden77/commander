@@ -8,7 +8,6 @@ Variables will be stored with case sensitive key value pairs in the following sy
 
 Commands: 
   - BEGIN = Opens a transaction
-  - CLEAR = Clears terminal
   - COMMIT = Commits current code within an open transaction
   - COUNT <value>  = Returns number over occurrences of a given value 
   - DELETE <key> = Removes key value pair associated with given key

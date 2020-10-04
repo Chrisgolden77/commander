@@ -27,7 +27,7 @@ const run = async () => {
   try {
     await promptUser();
   } catch (error) {
-    return await handleError({ errors: [...error] });
+    return await handleError({ error });
   }
   //show success message
 };
