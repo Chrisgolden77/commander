@@ -3,7 +3,7 @@
 const chalk = require("chalk");
 const figlet = require("figlet");
 
-const { handleError, messageUser, promptUser } = require("./utilities");
+const { handleError, messageUser, promptUserActions } = require("./utilities");
 
 const init = () => {
   messageUser({
@@ -15,7 +15,7 @@ const init = () => {
           verticalLayout: "default",
         })
       ),
-      chalk.grey("\nEnter HELP for a list of possible commands."),
+      chalk.grey("\nI live to serve you.\nEnter HELP for a list of possible commands."),
     ],
   });
 };
@@ -25,10 +25,10 @@ const run = async () => {
   init();
   //Ask questions
   try {
-    await promptUser();
+    await promptUserActions();
   } catch (error) {
     await handleError({ error });
-    return promptUser();
+    return promptUserActions();
   }
   //show success message
 };
