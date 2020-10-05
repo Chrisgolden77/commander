@@ -42,5 +42,5 @@ let db = {
     },
   },
 };
-
+Object.defineProperty(db, 'SP', {configurable: false, writable: false});
 module.exports = db;
