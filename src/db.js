@@ -2,8 +2,8 @@ let db = {
   name: "chris",
   creator: "chris",
   SP: {
-    handleCOUNT: ({ value }) => {
-      const valueOccurrences = Object.keys(db).filter((key) => db[key] === value);
+    handleCOUNT: ({ value, database}) => {
+      const valueOccurrences = Object.keys(db).filter((key) => database[key] === value);
       console.log(valueOccurrences);
       return `${valueOccurrences.length} ${
         valueOccurrences.length > 1 ? "keys" : "key"
@@ -11,29 +11,29 @@ let db = {
         valueOccurrences.length && valueOccurrences.map((key) => `${key}\n`)
       }`;
     },
-    handleDELETE: ({ key }) => {
-      const keyExists = db[key];
-      keyExists && delete db[key];
+    handleDELETE: ({ key, database}) => {
+      const keyExists = database[key];
+      keyExists && delete database[key];
       return keyExists
       ? `"${key}" deleted successfully.`
       : `"${key}" does not exist in database.`;
     },
-    handleGET: ({ key }) => {
+    handleGET: ({ key, database}) => {
       return (
-        (db[key] && `${key}: ${db[key]}`) ||
+        (database[key] && `${key}: ${database[key]}`) ||
         `"${key}" does not exist in database.`
         );
       },
-      handleSET: ({ key, value }) => {
-        const keyExists = db[key];
-        !keyExists && (db[key] = value);
+      handleSET: ({ key, value, database}) => {
+        const keyExists = database[key];
+        !keyExists && (database[key] = value);
         return keyExists
         ? `Key "${key}" already exists in db. Use UPDATE to change this key's value.`
         : `Successfully added "${key}" = "${value}".`;
       },
-      handleUPDATE: ({ key, value }) => {
-        const keyExists = db[key];
-        keyExists && (db[key] = value);
+      handleUPDATE: ({ key, value, database}) => {
+        const keyExists = database[key];
+        keyExists && (database[key] = value);
         return keyExists
         ? `Successfully updated: "${key}" = "${value}".`
         : `Key "${key}" doesn't exist in db.\nUse SET to add this key and value.`;
