@@ -88,6 +88,8 @@ const handleBEGIN = async () => {
 
   transactionOpen = true;
   transactionDB = { ...db };
+  Object.defineProperty(transactionDB, 'SP', {configurable: false, writable: false});
+
   return "Opened a transaction.\n Enter COMMIT to submit any following changes, or ROLLBACK to discard.\n Both will end the transaction.";
 };
 const handleCOMMIT = async () => {
@@ -103,6 +105,7 @@ const handleCOMMIT = async () => {
   });
   if (!CONFIRM_COMMIT) return "COMMIT cancelled. Transaction still open.";
   db = transactionDB;
+  // Object.defineProperty(db, 'SP', {configurable: false, writable: false});
   transactionOpen = false;
   transactionDB = { SP: {} };
   return "Changes committed. Transaction is now closed.";
